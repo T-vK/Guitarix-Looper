@@ -14,7 +14,7 @@ class GuitarixSingleButtonLooper
 {
 public:
     GuitarixLooper *guitarixLooper;
-    int currentLayer = 1;
+    int currentLayer = 0;
     int currentLayerStart;
     int baseLayerLength;
     bool recordingLayer = false;

@@ -21,9 +21,7 @@ void GuitarixSingleButtonLooper::startRecordBaseLayer(void) {
 void GuitarixSingleButtonLooper::stopRecordBaseLayer(void) {
     //Serial.println("GuitarixSingleButtonLooper::stopRecordBaseLayer");
     this->guitarixLooper->recordStop(this->currentLayer);
-    for (int i=1; i<=4; i++) {
-        this->guitarixLooper->play(i);
-    }
+    this->guitarixLooper->play(this->currentLayer);
     this->baseLayerLength = millis() - this->currentLayerStart; 
     this->guitarixLooper->send();
     this->currentLayer++;
@@ -32,7 +30,7 @@ void GuitarixSingleButtonLooper::stopRecordBaseLayer(void) {
 }
 void GuitarixSingleButtonLooper::recordNewLayer(void) {
     //Serial.println("GuitarixSingleButtonLooper::recordNewLayer");
-    if (this->currentLayer > 1 && this->currentLayer <= 4) {
+    if (this->currentLayer > 0 && this->currentLayer <= 3) {
         this->currentLayerStart = millis();
         this->guitarixLooper->recordStart(this->currentLayer);
         this->guitarixLooper->send();
@@ -45,6 +43,7 @@ void GuitarixSingleButtonLooper::stopRecording(void) {
     if (this->recordingLayer) {
         this->currentLayerStart = millis();
         this->guitarixLooper->recordStop(this->currentLayer);
+	this->guitarixLooper->play(this->currentLayer);
         this->guitarixLooper->send();
         this->recordingLayer = false;
         this->currentLayer++;
@@ -53,20 +52,26 @@ void GuitarixSingleButtonLooper::stopRecording(void) {
 }
 void GuitarixSingleButtonLooper::removeLastLayer(void) {
     //Serial.println("GuitarixSingleButtonLooper::removeLastLayer");
-    if (this->currentLayer > 1) {
+    if (this->currentLayer > 0) {
         this->currentLayer--;
         this->guitarixLooper->erase(this->currentLayer);
+	// workaround to reset the seekbar thingy:
+        this->guitarixLooper->play(this->currentLayer);
+        this->guitarixLooper->pause(this->currentLayer);
         this->guitarixLooper->send();
     }
 }
 void GuitarixSingleButtonLooper::reset(void) {
     //Serial.println("GuitarixSingleButtonLooper::reset");
-    this->currentLayer = 1;
+    this->currentLayer = 0;
     this->recordingLayer = false;
-    for (int i=1; i<=4; i++) {
+    for (int i=0; i<=3; i++) {
         this->guitarixLooper->recordStop(i);
         this->guitarixLooper->pause(i);
         this->guitarixLooper->erase(i);
+	// workaround to really reset guitarix
+	this->guitarixLooper->play(i);
+	this->guitarixLooper->pause(i);
     }
     this->guitarixLooper->send();
 }
@@ -74,7 +79,7 @@ void GuitarixSingleButtonLooper::reset(void) {
 
 void GuitarixSingleButtonLooper::loop(void) {
     int now = millis();
-    if (this->recordingLayer && this->currentLayer > 1 && now >= this->currentLayerStart+this->baseLayerLength) { // recording layer (excl base layer) and base layer length is reached
+    if (this->recordingLayer && this->currentLayer > 0 && now >= this->currentLayerStart+this->baseLayerLength) { // recording layer (excl base layer) and base layer length is reached
         this->stopRecording();
     }
 
@@ -85,11 +90,11 @@ void GuitarixSingleButtonLooper::loop(void) {
                 if (now > this->lastButtonPressedTime+this->doublepressTimeout) { // if >1s has passed since last press
                     // normal single press
                     if (this->recordingLayer) {
-                        if (this->currentLayer == 1) {
+                        if (this->currentLayer == 0) {
                             this->stopRecordBaseLayer();
                         }
                     } else {
-                        if (this->currentLayer == 1) {
+                        if (this->currentLayer == 0) {
                             this->startRecordBaseLayer();
                         } else {
                             this->recordNewLayer();
@@ -99,7 +104,7 @@ void GuitarixSingleButtonLooper::loop(void) {
                     if (this->recordingLayer) {
                         this->stopRecording();
                         this->removeLastLayer();
-                        if (this->currentLayer > 1) {
+                        if (this->currentLayer > 0) {
                             this->removeLastLayer();
                         }
                     } else {

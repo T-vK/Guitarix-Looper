@@ -1,10 +1,11 @@
 # Guitarix Looper
 
 ## Work in progress
-- This library is not finished yet and has not been tested so far.
+There are some bugs. Timing is not perfect and you have to manually press the play button for each tape twice in order to reset the "seekbar" properly (it might just be a visual bug though).
+
 
 ## Credits
-A big Thanks to snappy46 who told me how the Looper device can be controlled in the first place! Please take a look at his [GuitarixMidiController](https://github.com/snappy46/GuitarixMidiController) which is a very interesting project! Also look at the dev branch for the Looper functionality.
+A big Thanks to snappy46 who told me how the Looper device can be controlled in the first place! Please take a look at his [GuitarixMidiController](https://github.com/snappy46/GuitarixMidiController) which is a very interesting project! Also look at the dev branch for the Looper functionality. You might also want to look at his Readme because he has screenshots that might explain the process of how to connect the Arduino Midi device with Guitarix better to you.
 
 ## What does it do
 
@@ -26,3 +27,24 @@ You can repeat the last step two mroe times, so you would have 4 layers. That's 
 
 By double pressing the button you can delete the last layer (usually if you messed up).  
 By long pressing you can reset everything.
+
+## How to install the library
+In your Arduino IDE go to `Sketch->Include Library->Manage Libraries->[search for MIDIUSB and install the latest version]`
+Next [download the librabry as a zip file](https://github.com/T-vK/Guitarix-Looper/archive/master.zip)
+Then again in your Arduino IDE go to `Sketch->Include Library->Add a .ZIP Library` and select the file you just downloaded.
+Finally (again in the IDE) go to `File->Examples->Guitarix Looper->Examples->SingleButtonLooper`.  
+Adjust the pins for the looper button and the led.  
+
+## How to connect the Arduino Midi device with Guitarix
+- run `a2jmidid` 
+- run Guitarix
+- run `qjackctl` 
+- In qjackctl click `Connect` -> `click MIDI` -> (on the left panel) open the a2j tree and select your Arduino -> (on the right panel) select `gx_head_amp` -> click `Connect` in the same window.
+
+## Set up Guitarix for the Midi device
+In Guitarix in the looper module make a middle click on the record button of every tape, entering the codes 
+40 (for tape 1), 41 (for tape 2), 42 (tape 3), 43 (tape 4),
+Then do the same for the play button of every tape using these codes: 44,45,46,47
+And finally do the same for the erase button of every tape using these codes: 48,49,50,51
+
+
