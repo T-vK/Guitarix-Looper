@@ -2,7 +2,7 @@
 
 GuitarixSingleButtonLooper::GuitarixSingleButtonLooper(byte channel, byte *tapeRecord, byte *tapePlay, byte *tapeErase, int buttonPin, int ledPin) {
 
-    this->guitarixLooper = new GuitarixLooper(channel, *tapeRecord, *tapePlay, *tapeErase);
+    this->guitarixLooper = new GuitarixLooper(channel, tapeRecord, tapePlay, tapeErase);
     this->buttonPin = buttonPin;
     this->ledPin = ledPin;
 
