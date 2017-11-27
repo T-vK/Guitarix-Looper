@@ -15,6 +15,7 @@ void GuitarixSingleButtonLooper::startRecordBaseLayer(void) {
     this->guitarixLooper->recordStart(this->currentLayer);
     this->guitarixLooper->send();
     digitalWrite(this->ledPin, HIGH);
+    this->recordingLayer = true;
 }
 void GuitarixSingleButtonLooper::stopRecordBaseLayer(void) {
     this->guitarixLooper->recordStop(this->currentLayer);
@@ -25,6 +26,7 @@ void GuitarixSingleButtonLooper::stopRecordBaseLayer(void) {
     this->guitarixLooper->send();
     this->currentLayer++;
     digitalWrite(this->ledPin, LOW);
+    this->recordingLayer = false;
 }
 void GuitarixSingleButtonLooper::recordNewLayer(void) {
     if (this->currentLayer > 1 && this->currentLayer <= 4) {
@@ -71,7 +73,6 @@ void GuitarixSingleButtonLooper::loop(void) {
     }
 
     int buttonState = digitalRead(this->buttonPin);
-    
     if (buttonState == LOW) { // button is pressed down
         if (this->lastButtonState == HIGH) { // button was not pressed down
             if (now > this->lastButtonPressedTime+this->pressDelay) { // if >70ms have passed since last press

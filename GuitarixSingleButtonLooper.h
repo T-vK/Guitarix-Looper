@@ -17,10 +17,10 @@ public:
     int currentLayer = 1;
     int currentLayerStart;
     int baseLayerLength;
-    bool recordingLayer;
+    bool recordingLayer = false;
     int buttonPin;
     int ledPin;
-    int lastButtonState = LOW;
+    int lastButtonState = HIGH;
     int lastButtonPressedTime = 0;
     int pressDelay = 200;
     int doublepressTimeout = 1000;
