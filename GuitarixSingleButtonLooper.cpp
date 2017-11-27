@@ -11,6 +11,7 @@ GuitarixSingleButtonLooper::GuitarixSingleButtonLooper(byte channel, byte *tapeR
 }
 
 void GuitarixSingleButtonLooper::startRecordBaseLayer(void) {
+    //Serial.println("GuitarixSingleButtonLooper::startRecordBaseLayer");
     this->currentLayerStart = millis();
     this->guitarixLooper->recordStart(this->currentLayer);
     this->guitarixLooper->send();
@@ -18,6 +19,7 @@ void GuitarixSingleButtonLooper::startRecordBaseLayer(void) {
     this->recordingLayer = true;
 }
 void GuitarixSingleButtonLooper::stopRecordBaseLayer(void) {
+    //Serial.println("GuitarixSingleButtonLooper::stopRecordBaseLayer");
     this->guitarixLooper->recordStop(this->currentLayer);
     for (int i=1; i<=4; i++) {
         this->guitarixLooper->play(i);
@@ -29,25 +31,28 @@ void GuitarixSingleButtonLooper::stopRecordBaseLayer(void) {
     this->recordingLayer = false;
 }
 void GuitarixSingleButtonLooper::recordNewLayer(void) {
+    //Serial.println("GuitarixSingleButtonLooper::recordNewLayer");
     if (this->currentLayer > 1 && this->currentLayer <= 4) {
         this->currentLayerStart = millis();
         this->guitarixLooper->recordStart(this->currentLayer);
         this->guitarixLooper->send();
-        this->currentLayer++;
         this->recordingLayer = true;
         digitalWrite(this->ledPin, HIGH);
     }
 }
 void GuitarixSingleButtonLooper::stopRecording(void) {
+    //Serial.println("GuitarixSingleButtonLooper::stopRecording");
     if (this->recordingLayer) {
         this->currentLayerStart = millis();
         this->guitarixLooper->recordStop(this->currentLayer);
         this->guitarixLooper->send();
         this->recordingLayer = false;
+        this->currentLayer++;
         digitalWrite(this->ledPin, LOW);
     }
 }
 void GuitarixSingleButtonLooper::removeLastLayer(void) {
+    //Serial.println("GuitarixSingleButtonLooper::removeLastLayer");
     if (this->currentLayer > 1) {
         this->currentLayer--;
         this->guitarixLooper->erase(this->currentLayer);
@@ -55,6 +60,7 @@ void GuitarixSingleButtonLooper::removeLastLayer(void) {
     }
 }
 void GuitarixSingleButtonLooper::reset(void) {
+    //Serial.println("GuitarixSingleButtonLooper::reset");
     this->currentLayer = 1;
     this->recordingLayer = false;
     for (int i=1; i<=4; i++) {
