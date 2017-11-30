@@ -22,12 +22,13 @@ public:
     int ledPin;
     int lastButtonState = HIGH;
     int lastButtonPressedTime = 0;
+    int buttonDownSince = 0;
     int pressDelay = 200;
     int doublepressTimeout = 1000;
     int holdDelay = 2000;
 
     GuitarixSingleButtonLooper(byte channel, byte *tapeRecord, byte *tapePlay, byte *tapeErase, int buttonPin, int ledPin);
-    void loop(void);
+    void loop(unsigned long now);
     void startRecordBaseLayer(void);
     void stopRecordBaseLayer(void);
     void recordNewLayer(void);
