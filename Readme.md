@@ -1,7 +1,7 @@
 # Guitarix Looper
 
 ## Work in progress
-There are some bugs. Timing is not perfect and you have to manually press the play button for each tape twice in order to reset the "seekbar" properly (it might just be a visual bug though).
+There are some bugs. Timing is not perfect and you might have to manually press the play button for each tape twice in order to reset the "seekbar" properly (it might just be a visual bug though).
 
 
 ## Credits
@@ -13,8 +13,6 @@ This library makes your Arduino register as a Midi device on your computer throu
 
 Please note that not all Arduinos are USBMIDI compatible. I have used a cheap Arduino Pro Micro clone which acts like an Arduino Leonardo.  
 Arduino clones with a CH340 chip will probably not work. The official Arduino UNO, Pro Micro, Nano, MEGA and Lilipad etc should work fine. Pro Mini lacks a USB port...  
-
-[Refer to the example](examples/SingeButtonLooper/SingleButtonLooper.ino) for more information on how to set up Guitarix for the MIDI messages and your Arduino MIDI device with JACK. 
 
 
 ## How does it work
@@ -36,9 +34,9 @@ Finally (again in the IDE) go to `File->Examples->Guitarix Looper->Examples->Sin
 Adjust the pins for the looper button and the led.  
 
 ## How to connect the Arduino Midi device with Guitarix
-- run `a2jmidid` 
-- run Guitarix
 - run `qjackctl` 
+- run Guitarix
+- run `a2jmidid -e` 
 - In qjackctl click `Connect` -> `click MIDI` -> (on the left panel) open the a2j tree and select your Arduino -> (on the right panel) select `gx_head_amp` -> click `Connect` in the same window.
 
 ## Set up Guitarix for the Midi device
