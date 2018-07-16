@@ -4,17 +4,17 @@
 # Class
 #######################################
 
-GuitarixLooper KEYWORD1
+GuitarixLooper	KEYWORD1
 
 #######################################
 # Methods and Functions 
 ####################################### 
 
-recordStart         KEYWORD2
-recordStop          KEYWORD2
-play                KEYWORD2
-pause               KEYWORD2
-erase               KEYWORD2
+recordStart	KEYWORD2
+recordStop	KEYWORD2
+play	KEYWORD2
+pause	KEYWORD2
+erase	KEYWORD2
 
 #######################################
 # Constants
@@ -28,17 +28,17 @@ erase               KEYWORD2
 # Class
 #######################################
 
-GuitarixSingleButtonLooper KEYWORD1
+GuitarixSingleButtonLooper	KEYWORD1
 
 #######################################
 # Methods and Functions 
 ####################################### 
 
-recordBaseLayer     KEYWORD2
-stopRecordBaseLayer KEYWORD2
-addLayer            KEYWORD2
-removeLayer         KEYWORD2
-reset               KEYWORD2
+recordBaseLayer	KEYWORD2
+stopRecordBaseLayer	KEYWORD2
+addLayer	KEYWORD2
+removeLayer	KEYWORD2
+reset	KEYWORD2
 
 #######################################
 # Constants
